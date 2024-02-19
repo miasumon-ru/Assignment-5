@@ -9,4 +9,5 @@
 
     
     seatButton.addEventListener('click', handleSeatButton)
+    
   }

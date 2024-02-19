@@ -750,14 +750,14 @@
         
         </div>
 
-        <div class="flex flex-row my-2">
+        <div id="coupon-container" class="flex flex-row my-2 ">
           <input id="coupon-input"  type="text" placeholder="Have Any Coupon ?" class="input border-r-0 rounded-r-none input-bordered w-full max-w-xs" />
-          <button id="apply-btn" class="btn border-l-0 rounded-l-none bg-[#1DD100] text-white">Apply</button>
+          <button id="apply-btn" class="btn border-l-0 rounded-l-none bg-[#1DD100] text-white" disabled>Apply</button>
         </div>
 
         <div class="flex justify-between ">
           <p class="font-extrabold">Grand Total</p>
-          <p>BDT 1100</p>
+          <p>BDT <span id="grand-total">0</span></p>
         </div>
 
         <form class="bg-white flex flex-col gap-4 p-5 rounded-lg my-5" action="">
@@ -769,7 +769,7 @@
 
           <div>
             <label class="font-semibold"  for="">Phone Number*</label>
-            <input type="number" placeholder="Enter Your Phone Number" class="input w-full max-w-xs border-2 border-gray-100" />
+            <input id="phone-number" type="number" placeholder="Enter Your Phone Number" class="input w-full max-w-xs border-2 border-gray-100" />
           </div>
 
           <div>
@@ -777,7 +777,7 @@
             <input type="email" placeholder="Enter Your Email Id" class="input w-full max-w-xs border-2 border-gray-100" />
           </div>
 
-          <button class="btn btn-wide w-full bg-[#1DD100] text-white">Next</button>
+          <button id="next-btn" class="btn btn-wide w-full bg-[#1DD100] text-white">Next</button>
 
         </form>
 
