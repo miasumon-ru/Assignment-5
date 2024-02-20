@@ -1,16 +1,16 @@
 
-function getAElementById(elementId){
+function getAElementById(elementId) {
     const element = document.getElementById(elementId);
     return element;
 }
 
-function getElementsByQuerySelectorAll(selector){
+function getElementsByQuerySelectorAll(selector) {
     const elements = document.querySelectorAll(selector);
     return elements;
 }
 
 
-function getAInnerTextById (elementId){
+function getAInnerTextById(elementId) {
 
     const element = document.getElementById(elementId);
     const innerTextValue = element.innerText;
@@ -19,7 +19,7 @@ function getAInnerTextById (elementId){
 
 }
 
-function setInnerTextById(elementId, value){
+function setInnerTextById(elementId, value) {
     const element = getAElementById(elementId);
     element.innerText = value;
 }
@@ -27,30 +27,33 @@ function setInnerTextById(elementId, value){
 let buttonInfoArray = [];
 
 
-function handleSeatButton(event){
+function handleSeatButton(event) {
 
     const seatCount = parseInt(getAInnerTextById('selected-seat-number'));
 
-    if(seatCount === 4){
+    if (seatCount === 4) {
+
+        alert('You can not select more than four seats');
+
         return;
     }
 
-    
-
-   
 
     // color add for each button
 
-     const targetedButton =  event.target;
+    const targetedButton = event.target;
 
-     targetedButton.classList.add("bg-[#1DD100]");
-     targetedButton.classList.add("text-white");
+    targetedButton.classList.add("bg-[#1DD100]");
+    targetedButton.classList.add("text-white");
 
 
-     const buttonInfo =  targetedButton.innerText;
-     if(buttonInfoArray.includes(buttonInfo) == true){
-         return;
-     }
+    const buttonInfo = targetedButton.innerText;
+    if (buttonInfoArray.includes(buttonInfo) == true) {
+
+        alert('This seat has been already selected')
+        return;
+    }
+
 
     //  left seats
 
@@ -58,14 +61,12 @@ function handleSeatButton(event){
 
     const leftSeats = getAElementById('seats-left')
 
-     remainingSeats =  parseInt(leftSeats.innerText) -1;
-     console.log(remainingSeats);
+    remainingSeats = parseInt(leftSeats.innerText) - 1;
 
-     leftSeats.innerText = remainingSeats;
+    leftSeats.innerText = remainingSeats;
 
     //  selected seat number 
 
- 
 
     const selectedSeatNumberText = getAInnerTextById('selected-seat-number');
 
@@ -73,119 +74,111 @@ function handleSeatButton(event){
 
     setInnerTextById('selected-seat-number', seatNumber);
 
-  
+
 
     //  selected seat Information add
 
-  
-
-     buttonInfoArray.unshift(buttonInfo)
-
-     console.log(buttonInfoArray.includes(buttonInfo))
 
 
+    buttonInfoArray.unshift(buttonInfo)
 
-     const tr = document.createElement('tr');
-     const td = document.createElement('td');
-     const td2 = document.createElement('td');
-     const td3 = document.createElement('td');
+    console.log(buttonInfoArray.includes(buttonInfo))
 
-     td.innerText = buttonInfo;
-     td2.innerText = 'Economy';
-     td3.innerText = 550;
 
-     tr.appendChild(td);
-     tr.appendChild(td2);
-     tr.appendChild(td3);
 
-     const tdBody = getAElementById('td-body');
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    const td2 = document.createElement('td');
+    const td3 = document.createElement('td');
 
-     tdBody.appendChild(tr);
+    td.innerText = buttonInfo;
+    td2.innerText = 'Economy';
+    td3.innerText = 550;
 
-     
-    
+    tr.appendChild(td);
+    tr.appendChild(td2);
+    tr.appendChild(td3);
+
+    const tdBody = getAElementById('td-body');
+
+    tdBody.appendChild(tr);
+
+
+
 
     //  total price add 
 
     const seatNumbers = parseInt(getAInnerTextById('selected-seat-number'));
 
-    const totalPrice = 550*seatNumbers ;
+    const totalPrice = 550 * seatNumbers;
 
     setInnerTextById('total-price', totalPrice);
 
-       // Grand Total Update
-     
-       const grandTotalElement = getAElementById('grand-total');
-        const grandTotal = getAElementById.innerText = totalPrice;
+    // Grand Total Update
 
-        setInnerTextById('grand-total', grandTotal)
+    const grandTotalElement = getAElementById('grand-total');
+    const grandTotal = getAElementById.innerText = totalPrice;
 
-
+    setInnerTextById('grand-total', grandTotal)
 
 
-        // disable if not selected 4 seats
 
-        if(seatNumbers === 4){
 
-            const applyButtonDisabled = getAElementById('apply-btn');
+    // disable if not selected 4 seats
+
+    if (seatNumbers === 4) {
+
+        const applyButtonDisabled = getAElementById('apply-btn');
+
+        applyButtonDisabled.removeAttribute('disabled');
+    }
+
+
+    const numberInput = getAElementById('phone-number');
+     const len = numberInput.value.toString().length
     
-            applyButtonDisabled.removeAttribute('disabled');
-           }
+     if(len > 0 && seatNumbers > 0){
 
-     
-      
-    // coupon apply
+        const nextButton = getAElementById('next-button');
+        nextButton.removeAttribute('disabled')
+
+     }
 
 
-    const applyButton = getAElementById('apply-btn');
-    applyButton.addEventListener('click', function(){
-    
+
+
+}
+
+// coupon apply
+
+
+const seatNumbers = parseInt(getAInnerTextById('selected-seat-number'));
+
+// console.log(seatNumbers)
+
+const totalPrice = 550 * seatNumbers;
+
+
+const applyButton = getAElementById('apply-btn');
+applyButton.addEventListener('click', function () {
+
     const couponInput = getAElementById('coupon-input');
     const couponInputValue = couponInput.value;
 
-   
 
 
 
-    
-
-    if(couponInputValue === 'NEW15' && seatNumbers === 4){
-
-      
-        const discount = totalPrice*15/100
-
-       const p = document.createElement('p');
-       const p2 = document.createElement('p');
-       p.innerText = 'Discount';
-       p2.innerText = discount;
-       p.classList.add('font-extrabold');
-
-       const discountDiv = getAElementById('discount-div')
-       discountDiv.appendChild(p);
-       discountDiv.appendChild(p2);
-
-       const updatedGrandTotal = totalPrice - discount;
-
-       setInnerTextById('grand-total', updatedGrandTotal);
-
-       const couponContainer = getAElementById('coupon-container')
-       couponContainer.classList.add('hidden')
-
-       couponInput.value = '' ;
+    if (couponInputValue === 'NEW15' && seatNumbers === 4) {
 
 
-
-    }
-    else if(couponInputValue === 'Couple 20' && seatNumbers === 4){
-
-        const discount = totalPrice*20/100;
+        const discount = totalPrice * 15 / 100
 
         const p = document.createElement('p');
         const p2 = document.createElement('p');
         p.innerText = 'Discount';
         p2.innerText = discount;
         p.classList.add('font-extrabold');
- 
+
         const discountDiv = getAElementById('discount-div')
         discountDiv.appendChild(p);
         discountDiv.appendChild(p2);
@@ -196,20 +189,99 @@ function handleSeatButton(event){
 
         const couponContainer = getAElementById('coupon-container')
         couponContainer.classList.add('hidden')
- 
-        couponInput.value = '' ;
+
+        couponInput.value = '';
+
+
+
+    }
+    else if (couponInputValue === 'Couple 20' && seatNumbers === 4) {
+
+        const discount = totalPrice * 20 / 100;
+
+        const p = document.createElement('p');
+        const p2 = document.createElement('p');
+        p.innerText = 'Discount';
+        p2.innerText = discount;
+        p.classList.add('font-extrabold');
+
+        const discountDiv = getAElementById('discount-div')
+        discountDiv.appendChild(p);
+        discountDiv.appendChild(p2);
+
+        const updatedGrandTotal = totalPrice - discount;
+
+        setInnerTextById('grand-total', updatedGrandTotal);
+
+        const couponContainer = getAElementById('coupon-container')
+        couponContainer.classList.add('hidden')
+
+        couponInput.value = '';
+
+    } else {
+        alert('invalid coupon code')
+    }
+
+    
+
+
+
+
+
+})
+
+
+
+// console.log(lengthOfNumber())
+
+
+
+
+// Next Button Disable at Initial Stage
+
+
+
+const numberInput = getAElementById('phone-number');
+
+let pressedNumber = [];
+
+numberInput.addEventListener('keyup', function (event) {
+    const pressed = event.key;
+
+    pressedNumber.push(pressed);
+
+    const numberLength = pressedNumber.length;
+    // console.log("number len", numberLength)
+
+    const seatNumbers = parseInt(getAInnerTextById('selected-seat-number'))
+
+    if (numberLength > 0 && seatNumbers > 0) {
+
+        const nextButton = getAElementById('next-button');
+        nextButton.removeAttribute('disabled')
+        // console.log(nextButton)
 
     }
 
-
- 
-
-        
-    })
+})
 
 
 
 
 
-    
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

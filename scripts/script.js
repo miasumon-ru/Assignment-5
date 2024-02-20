@@ -1,4 +1,7 @@
  
+
+//  functionality of selecting seat
+
   const seatButtons = getElementsByQuerySelectorAll('#seat-button');
 
   let remainingSeats;
@@ -11,3 +14,8 @@
     seatButton.addEventListener('click', handleSeatButton)
     
   }
+
+  // next button functionality
+
+  
+
