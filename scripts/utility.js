@@ -135,14 +135,14 @@ function handleSeatButton(event) {
 
 
     const numberInput = getAElementById('phone-number');
-     const len = numberInput.value.toString().length
-    
-     if(len > 0 && seatNumbers > 0){
+    const len = numberInput.value.toString().length
+
+    if (len > 0 && seatNumbers > 0) {
 
         const nextButton = getAElementById('next-button');
         nextButton.removeAttribute('disabled')
 
-     }
+    }
 
 
 
@@ -152,18 +152,21 @@ function handleSeatButton(event) {
 // coupon apply
 
 
-const seatNumbers = parseInt(getAInnerTextById('selected-seat-number'));
-
-// console.log(seatNumbers)
-
-const totalPrice = 550 * seatNumbers;
-
-
 const applyButton = getAElementById('apply-btn');
 applyButton.addEventListener('click', function () {
 
+
+    const seatNumbers = parseInt(getAInnerTextById('selected-seat-number'));
+
+
+    const totalPrice = 550 * seatNumbers;
+
+
     const couponInput = getAElementById('coupon-input');
     const couponInputValue = couponInput.value;
+
+
+   
 
 
 
@@ -218,11 +221,12 @@ applyButton.addEventListener('click', function () {
 
         couponInput.value = '';
 
-    } else {
-        alert('invalid coupon code')
+    }
+     else {
+        alert('invalid coupon code');
     }
 
-    
+
 
 
 
